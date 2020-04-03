@@ -127,5 +127,10 @@ In order to plot this word frequency vector, we had to strip out all non-alphanu
 ```
 only showing top 30 rows
 
-594 Retweets 214,936
-.2% of all tweets were retweets from candidates. 
+- 594 Retweets 214,936
+- .2% of all tweets were retweets from candidates. 
+- The Candidates Tweeted 18 times during this period.
+- Macron 18 Tweets
+- Le Penn 1 Tweet
+- Macron was Retweeted 423 Times
+- Le Penn was Retweeted 171 Times
