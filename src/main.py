@@ -3,7 +3,6 @@ import pyspark.sql.functions as f
 from datetime import datetime 
 from nltk.corpus import stopwords
 import nltk
-import wordcloud
 import matplotlib.pyplot as plt
 from pyspark.sql.types import StructType
 
@@ -131,47 +130,6 @@ user_mentions_df = spark.sql('''
                         french_tweets_df_sample
                     LATERAL VIEW explode(entities.user_mentions.screen_name) myTable3 AS user_mentions
 ''')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

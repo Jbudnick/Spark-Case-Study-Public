@@ -59,5 +59,8 @@ From these filtered tweets, we took the word frequency vector:
 |             ça|  415|
 ```
 
-Given more time, we would filter whitespace and punctuation. We would also combine words regardles of case (ex. MACRON vs. Macron).
+Given more time, we would filter whitespace and punctuation.
 
+![Image2](images/wordfreq.png)
+
+In order to plot this word frequency vector, we had to strip out all non-alphanumeric characters, thus the blank keys.
