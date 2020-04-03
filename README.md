@@ -23,6 +23,8 @@ We kept the following columns:
 
 After limiting the number of fields we were working with, we worked to strip down the dataset to only tweets involving the French election.
 
+We found there were some tweets made from England (not France?), so we tossed those.
+
 To do this, we chose some keywords. If the tweet didn't contain one of the keywords, we tossed it out.
 
 To start, we chose the following keywords:
@@ -40,27 +42,21 @@ From these filtered tweets, we took the word frequency vector:
 +---------------+-----+                                                         
 |           word|count|
 +---------------+-----+
-|         Macron| 1997|
-|@EmmanuelMacron| 1886|
-|             Le| 1583|
+|         macron| 2851|
+|@emmanuelmacron| 1891|
 |               | 1294|
-|              a| 1038|
+|              a| 1236|
+|            pen| 1125|
 |              !| 1012|
-|            Pen|  913|
-|          c'est|  744|
-|        #Macron|  604|
-|          voter|  577|
+|          c'est|  967|
+|        #macron|  865|
+|          voter|  662|
+|         marine|  586|
 |              ?|  554|
 |              :|  510|
-|         MACRON|  494|
-|         Marine|  493|
-|           plus|  423|
-|             va|  419|
-|              -|  406|
-|          faire|  370|
-|         macron|  359|
-|           fait|  355|
-+---------------+-----+
+|           plus|  457|
+|             va|  437|
+|             ça|  415|
 ```
 
 Given more time, we would filter whitespace and punctuation. We would also combine words regardles of case (ex. MACRON vs. Macron).

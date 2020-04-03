@@ -37,14 +37,14 @@ def clean_date(dataframe):
     return cleaned
 
 #This function will return a wordcount in the colname of the spark dataframe specified.
+
 def get_sparkdf_wordcount(spark_df, colname, stop_word_list):
-    res = spark_df.withColumn('word', f.explode(f.split(f.col(colname), ' ')))\
+    res = spark_df.withColumn('word', f.explode(f.split(f.lower(f.col(colname)), ' ')))\
     .groupBy('word')\
     .count()\
     .sort('count', ascending=False)
     return res.filter(res.word.isin(stop_word_list)==False)
     #Add returning histogram of word count?
-    
 
 spark = (ps.sql.SparkSession.builder 
         .master("local[4]") 
@@ -71,6 +71,8 @@ cleaned_tweets = spark.sql('''
                     WHERE
                         place.country_code = "FR"
 ''')
+
+cleaned_tweets = clean_date(cleaned_tweets)
 
 cand_tweets= spark.sql('''
                     SELECT
@@ -129,6 +131,46 @@ user_mentions_df = spark.sql('''
                         french_tweets_df_sample
                     LATERAL VIEW explode(entities.user_mentions.screen_name) myTable3 AS user_mentions
 ''')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

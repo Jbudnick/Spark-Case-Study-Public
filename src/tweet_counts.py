@@ -27,3 +27,17 @@ if __name__ == '__main__':
     plt.savefig('images/filtered_counts.png')
 
     word_freq = get_sparkdf_wordcount(filt_tweets, 'text', french_stopwords_list)
+
+
+    word_freq = get_sparkdf_wordcount(filt_tweets, 'text', french_stopwords_list)
+    pd_word_freq = word_freq.toPandas()
+
+    fig, ax = plt.subplots(1, 1)
+
+    pd_word_freq['word'].replace(regex=True, inplace=True, to_replace=r'[^0-9.\-A-Za-z]', value=r'')
+    pd_word_freq = pd_word_freq.head(15)
+    ax = pd_word_freq.plot.bar(x='word', y='count', rot=0)
+
+    word_freq.show(15)
+    plt.xticks(rotation=45)
+    plt.savefig('images/wordfreq.png')
