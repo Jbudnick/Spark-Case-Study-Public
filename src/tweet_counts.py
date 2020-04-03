@@ -9,19 +9,21 @@ from nltk.corpus import stopwords
 import numpy as np
 import matplotlib.pyplot as plt
 
+if __name__ == '__main__':
+    plt.style.use("tableau-colorblind10")
 
-nltk.download('stopwords')
-french_stopwords_list = stopwords.words('french')
+    nltk.download('stopwords')
+    french_stopwords_list = stopwords.words('french')
 
-filt_tweets = filter_tweets(list_of_key_words, cleaned_tweets, cleaned_tweets.text)
-objects = ('Tweets before filtering', "Tweets after filtering")
-y_pos = np.arange(len(objects))
-performance = [cleaned_tweets.count(), filt_tweets.count()]
+    filt_tweets = filter_tweets(list_of_key_words, cleaned_tweets, cleaned_tweets.text)
+    objects = ('Tweets before filtering', "Tweets after filtering")
+    y_pos = np.arange(len(objects))
+    performance = [cleaned_tweets.count(), filt_tweets.count()]
 
-plt.bar(y_pos, performance, align='center', alpha=0.5)
-plt.xticks(y_pos, objects)
-plt.ylabel('# of Tweets')
-plt.title('Tweet Filtering')
-plt.savefig('images/filtered_counts.png')
+    plt.bar(y_pos, performance, align='center', alpha=0.5)
+    plt.xticks(y_pos, objects)
+    plt.ylabel('# of Tweets')
+    plt.title('Tweet Filtering')
+    plt.savefig('images/filtered_counts.png')
 
-word_freq = get_sparkdf_wordcount(filt_tweets, 'text', french_stopwords_list)
+    word_freq = get_sparkdf_wordcount(filt_tweets, 'text', french_stopwords_list)

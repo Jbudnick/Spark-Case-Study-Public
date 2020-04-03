@@ -3,8 +3,9 @@ import pyspark.sql.functions as f
 from datetime import datetime 
 from nltk.corpus import stopwords
 import nltk
-
-
+import wordcloud
+import matplotlib.pyplot as plt
+from pyspark.sql.types import StructType
 
 def filter_tweets(txt_lst, df, col):
     '''
@@ -19,6 +20,22 @@ def filter_tweets(txt_lst, df, col):
 
 list_of_key_words = ['Le Pen', 'Macron', 'président', 'présidente']
 
+#This function cleans the dates and drops the old format of date column
+def clean_date(dataframe):
+    dirty_rdd = dataframe.select('created_at').rdd
+    dirty_rdd = dirty_rdd.map(lambda row : datetime.strptime(row[0], '%a %b %d %H:%M:%S %z %Y'))
+    clean_rdd = dirty_rdd.map(lambda row: datetime.strftime(row, '%m %d %Y'))
+    clean_dates = spark.createDataFrame(clean_rdd, ps.sql.types.StringType())
+    schema = ps.sql.types.StructType( [
+         ps.sql.types.StructField('date',ps.sql.types.StringType(),True)]
+    )
+    clean_dates = spark.createDataFrame(clean_rdd, ps.sql.types.StringType())
+    schema = StructType(cleaned_tweets.schema.fields + clean_dates.schema.fields)
+    combined = cleaned_tweets.rdd.zip(clean_dates.rdd).map(lambda x: x[0]+x[1])
+    cleaned = spark.createDataFrame(combined, schema).drop('created_at')
+    cleaned = cleaned.withColumnRenamed("value", "Date")
+    return cleaned
+
 #This function will return a wordcount in the colname of the spark dataframe specified.
 def get_sparkdf_wordcount(spark_df, colname, stop_word_list):
     res = spark_df.withColumn('word', f.explode(f.split(f.col(colname), ' ')))\
@@ -28,6 +45,7 @@ def get_sparkdf_wordcount(spark_df, colname, stop_word_list):
     return res.filter(res.word.isin(stop_word_list)==False)
     #Add returning histogram of word count?
     
+
 spark = (ps.sql.SparkSession.builder 
         .master("local[4]") 
         .appName("Spark Case Study") 
@@ -112,12 +130,6 @@ user_mentions_df = spark.sql('''
                     LATERAL VIEW explode(entities.user_mentions.screen_name) myTable3 AS user_mentions
 ''')
 
-# def word_cloud(data_frame, name):
-#     text = data_frame
-#     wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(text)
-#     plt.figure()
-#     plt.imshow(wordcloud, interpolation="bilinear")
-#     plt.axis("off")
-#     plt.show()
+
 
 

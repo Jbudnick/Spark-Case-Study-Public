@@ -63,4 +63,5 @@ From these filtered tweets, we took the word frequency vector:
 +---------------+-----+
 ```
 
-Given more time, we would filter whitespace and punctuation...
+Given more time, we would filter whitespace and punctuation. We would also combine words regardles of case (ex. MACRON vs. Macron).
+
